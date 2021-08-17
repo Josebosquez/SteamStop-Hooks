@@ -1,10 +1,61 @@
-.navbar {
-    height: 75px;
-    width: 100%;
-    background-color: grey;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-}
+    .Navbar {
+        width: 100%;
+        height: 75px;
+        background-color: #222222;
+        /* background-color: #4e5052; */
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    
+    .navlink {
+        color: white;
+        text-decoration: none;
+    }
+    
+    .trainLogo {
+        background-image: url("logo.png");
+        background-repeat: no-repeat;
+        background-size: 80px 43px;
+        border: 2px solid black;
+        width: 75px;
+        color: white;
+        margin-top: 2px;
+        margin-right: 40px;
+    }
+    
+    .h1-logo {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 40px;
+        width: 50%;
+        text-decoration: none;
+        color: white
+    }
+    
+    .nav-right-side {
+        width: 50%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    div ul li a {
+        text-decoration: none;
+    }
+    
+    div ul li {
+        display: inline-block;
+        width: 100px;
+        justify-content: right;
+        text-decoration: none;
+    }
+    
+    .selected {
+        text-decoration: none;
+        border-bottom: 1px solid white;
+    }
+    
+    .nav-right-side ul li:not(:last-child) {
+        margin-right: 15px;
+    }
