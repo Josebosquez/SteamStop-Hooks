@@ -1,0 +1,165 @@
+/* * {
+    margin: center;
+    outline: solid white 1px;
+} */
+
+.main {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top {
+    display: flex;
+    width: 100%;
+}
+
+.input-trending {
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input input {
+    margin-top: 35px;
+    width: 300px;
+    height: 20px;
+    border: 1px solid rgb(59, 59, 136);
+}
+
+.trending {
+    margin-top: 0;
+    width: 1000px;
+    height: 350px;
+    border: 1px solid black;
+    background-color: rgba(190, 205, 212, 0.671);
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    width: 75%;
+    border: 1px solid black;
+    height: 350px;
+}
+
+.trendingImg {
+    width: 100%;
+    height: 350px;
+}
+
+.right {
+    border: 1px solid black;
+    width: 25%;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.searchedGameResults {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1150px;
+    height: auto;
+}
+
+.searchResults {
+    border: 1px solid black;
+    width: 100px;
+    height: 250px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.img {
+    width: 100%;
+    height: 60%;
+}
+
+.searchResultsText,
+.trendingGameTitle {
+    text-align: initial;
+    font-size: 15px;
+    margin-left: 10px;
+    word-wrap: break-word;
+}
+
+
+/* ---- bottom half ----- */
+
+.allPlatforms {
+    margin-top: 50px;
+    border: 1px solid black;
+    width: 15%;
+    height: 450px;
+}
+
+
+/*----- bottom-half platforms array search-----*/
+
+.searchedPlatformResults {
+    margin-bottom: 10px;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.platformResults {
+    width: 150px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.searchResultsList {
+    height: 25px;
+    margin-top: 10px;
+    text-decoration: underline;
+}
+
+
+/*----- bottom-half row search-----*/
+
+.row {
+    margin-top: 50px;
+    border: 1px solid black;
+    width: 80%;
+    height: auto;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.filteredTitle {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+.row1 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+}
+
+.rowResults {
+    border: 2px solid black;
+    width: 100px;
+    height: 230px;
+}
