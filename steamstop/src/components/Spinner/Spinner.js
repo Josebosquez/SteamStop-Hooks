@@ -3,7 +3,7 @@ import "./Spinner.css"
 
 function Spinner() {
     return (
-        <div className='loader' style={{marginTop: '50%'}}>Loading...</div>
+        <div className='loader' style={{marginTop: '20%'}}>Loading...</div>
     )
 }
 

@@ -4,6 +4,7 @@ export const AuthContext = createContext({});
 
 const initialState = {
     user: null,
+    
 }
 
 function reducer(state, action) {
