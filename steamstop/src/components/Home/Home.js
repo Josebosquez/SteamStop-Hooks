@@ -2,11 +2,15 @@ import React, {useContext, useState, useEffect} from 'react'
 import axios from "axios"
 import { Link } from 'react-router-dom'
 import "./Home.css"
-import AppContext from "../../context/ThemeContext"
+import {ThemeContext} from "../../context/ThemeContext"
 
 function Home(){
-    const {isMode} = useContext(AppContext)
+    const { isMode, Platforms, platformSearch, isLoading} = useContext(ThemeContext)
 
+    useEffect(() => {
+        Platforms();
+    }, [])
+    
     return (
         <div>
             <div className='main' style={{ background: isMode ? "lightslategray" : 'black' }}>
@@ -15,6 +19,14 @@ function Home(){
                         <p className='filteredTitle'>Platforms</p>
 
                         <div className='searchedPlatformResults'>
+                            {isLoading ? <div> ...loading</div> : <div> 
+                                {platformSearch.map((item)=>{
+                                return (
+                                    <span key={item.id}>
+                                        {item.name}
+                                    </span>
+                                )
+                            })}</div>}
                         </div>
                     </div>
 

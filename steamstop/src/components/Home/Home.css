@@ -3,6 +3,10 @@
     outline: solid white 1px;
 } */
 
+body {
+    width: 100%;
+}
+
 .main {
     height: auto;
     display: flex;

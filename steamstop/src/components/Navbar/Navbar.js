@@ -6,8 +6,6 @@ import {ThemeContext} from '../../context/ThemeContext';
 
 function Navbar() {
     const { isMode, setIsMode } = useContext(ThemeContext)
-    console.log(setIsMode)
-    console.log(isMode)
 
     return (
         <nav className='Navbar'>
