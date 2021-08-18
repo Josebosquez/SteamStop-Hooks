@@ -4,18 +4,18 @@ import Spinner from './components/Spinner/Spinner'
 import MainRouter from './MainRouter'
 import AuthContextWrapper from "./context/AuthContext"
 import "./App.css"
-import { ThemeContext } from './context/ThemeContext'
+
+import ThemeContextWrapper from './context/ThemeContext'
 
 function App() {
-  const themes = useContext(ThemeContext)
 
   return (
     <React.Suspense fallback={<Spinner />}>
       <Router>
         <AuthContextWrapper>
-          <ThemeContext.Provider value={themes.dark}>
+          <ThemeContextWrapper>
             <MainRouter />
-          </ThemeContext.Provider>
+          </ThemeContextWrapper>
         </AuthContextWrapper>
       </Router>
     </React.Suspense>

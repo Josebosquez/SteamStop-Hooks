@@ -1,15 +1,22 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom';
 import "./Navbar.css";
+import { withRouter } from 'react-router-dom'
+
 
 import { ThemeContext } from '../../context/ThemeContext';
 
 function Navbar(props) {
-    function handleTheme() {
-        const Themes = useContext(ThemeContext)
-        return (<button style={{ background: Themes.background, color: Themes.foreground }}>
+    const {state: {backGround, foreground}, dispatch} = useContext(ThemeContext)
+
+        console.log('hello')
+        console.log(props)
+    
+        function handleTheme(e) {
+        console.log(1)
+        return (<div>
             i am styled by theme context
-        </button>)
+        </div>)
     }
 
     return (
@@ -32,10 +39,11 @@ function Navbar(props) {
                         Logout
                     </li>
                 </ul>
-                <button onClick={() => { handleTheme }}>Light/Dark Mode</button>
+                {/* <button >Light/Dark Mode</button> */}
+                <button onClick={(e) => { handleTheme() }}>Light/Dark Mode</button>
             </div>
         </nav>
     )
 }
 
-export default Navbar
+export default withRouter(Navbar)
