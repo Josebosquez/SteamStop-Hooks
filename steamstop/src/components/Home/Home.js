@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import axios from "axios"
 import { Link } from 'react-router-dom'
 import "./Home.css"
-
+import AppContext from "../../context/ThemeContext"
 
 function Home(){
-
+    const {isMode} = useContext(AppContext)
 
     return (
         <div>
-            <div className='main'>
+            <div className='main' style={{ background: isMode ? "lightslategray" : 'black' }}>
                 <div className='top'>
                     <div className='allPlatforms'>
                         <p className='filteredTitle'>Platforms</p>

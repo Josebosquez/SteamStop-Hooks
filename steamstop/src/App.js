@@ -1,11 +1,11 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import { BrowserRouter as Router } from "react-router-dom"
 import Spinner from './components/Spinner/Spinner'
 import MainRouter from './MainRouter'
 import AuthContextWrapper from "./context/AuthContext"
-import "./App.css"
+import "./_base.css"
 
-import ThemeContextWrapper from './context/ThemeContext'
+// import ThemeContextWrapper from './context/ThemeContext'
 
 function App() {
 
@@ -13,9 +13,9 @@ function App() {
     <React.Suspense fallback={<Spinner />}>
       <Router>
         <AuthContextWrapper>
-          <ThemeContextWrapper>
+          {/* <ThemeContextWrapper> */}
             <MainRouter />
-          </ThemeContextWrapper>
+          {/* </ThemeContextWrapper> */}
         </AuthContextWrapper>
       </Router>
     </React.Suspense>
