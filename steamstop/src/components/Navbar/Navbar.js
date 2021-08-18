@@ -2,7 +2,16 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom';
 import "./Navbar.css";
 
-function Navbar() {
+import { ThemeContext } from '../../context/ThemeContext';
+
+function Navbar(props) {
+    function handleTheme() {
+        const Themes = useContext(ThemeContext)
+        return (<button style={{ background: Themes.background, color: Themes.foreground }}>
+            i am styled by theme context
+        </button>)
+    }
+
     return (
         <nav className='Navbar'>
             <div className="h1-logo">
@@ -23,6 +32,7 @@ function Navbar() {
                         Logout
                     </li>
                 </ul>
+                <button onClick={() => { handleTheme }}>Light/Dark Mode</button>
             </div>
         </nav>
     )

@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import { Link } from 'react-router-dom'
 import "./Home.css"
 
 
 function Home(){
+
+
     return (
         <div>
             <div className='main'>
@@ -13,7 +15,6 @@ function Home(){
                         <p className='filteredTitle'>Platforms</p>
 
                         <div className='searchedPlatformResults'>
-                            
                         </div>
                     </div>
 
@@ -24,11 +25,10 @@ function Home(){
                                 />
                                 <button>Enter</button>
                             </form>
-
                         </div>
 
                         <div className='searchedGameResults'>
-                            
+
                         </div>
 
                         <p className='filteredTitle'>
@@ -36,9 +36,6 @@ function Home(){
                         </p>
 
                         <div className='trending'>
-                            
-                                
-
                         </div>
                     </div>
                 </div>
