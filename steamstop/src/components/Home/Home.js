@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import "./Home.css"
 import { ThemeContext } from "../../context/ThemeContext"
+import Spinner from "../Spinner/Spinner"
 
 function Home() {
     const { isMode, Platforms, platformSearch, isLoading, value, setValue, SearchBar, SearchedGameArr } = useContext(ThemeContext)
@@ -12,6 +13,7 @@ function Home() {
 
     useEffect(() => {
         Platforms();
+
     }, [])
 
 
@@ -23,7 +25,7 @@ function Home() {
                         <p className='filteredTitle'>Platforms</p>
 
                         <div className='searchedPlatformResults'>
-                            {isLoading ? <div> ...loading</div> : <div className='platformResults'>
+                            {isLoading ? <div> <Spinner/></div> : <div className='platformResults'>
                                 {platformSearch.map((item) => {
                                     return (
                                         <Link to={{ pathname: `/platform-search/${item.id}` }} className="itemName" key={item.id}>

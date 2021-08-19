@@ -9,6 +9,19 @@ const AppState = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [SearchedGameArr, setSearchedGameArr] = useState([])
 
+    //-------- GameDetails state
+    const [searchedGameDetails, setSearchedGameDetails] = useState([])
+    const [gameName, setGameName] = useState('')
+    const [rating, setRating] = useState('')
+    const [playtime, setPlaytime] = useState('')
+    const [availablePlatforms, setavailablePlatforms] = useState([])
+    const [achievementCount, setachievementCount] = useState('')
+    const [released, setreleased] = useState('')
+    const [stores, setstores] = useState([])
+    const [image, setImage] = useState('')
+    // const [imageArray, setImageArray] = useState([])
+    // const [bigImage, setBigImage] = useState('')
+
 
     async function Platforms() {
         setIsLoading(true)
@@ -47,20 +60,28 @@ const AppState = (props) => {
     }
 
     async function gameInfo(game){
+        setIsLoading(true)
+
         try {
             let result = await axios.get(`https://api.rawg.io/api/games/${game}?key=6a456b24916a4165a3ab90808cf6d07c`)
 
-            console.log(result)
+            let gameResult = result.data;
 
-            let gameResult = result;
-
+            if(result.status=== 200){
+                setIsLoading(false)
+                setSearchedGameDetails(gameResult)
+            }
+            
         } catch (e) {
             console.log(e)
+            setIsLoading(false)
         }
     }
 
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo,  }}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, }}>
+
+
             {props.children}
         </ThemeContext.Provider>
     )
