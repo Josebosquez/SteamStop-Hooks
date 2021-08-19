@@ -124,6 +124,11 @@ body {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    font-size: 20px;
+}
+
+.itemName:hover {
+    color: white
 }
 
 .searchResultsList {

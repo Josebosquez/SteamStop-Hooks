@@ -13,19 +13,13 @@ const AppState = (props) => {
         setIsLoading(true)
         try {
         let result = await axios.get('https://api.rawg.io/api/platforms?key=6a456b24916a4165a3ab90808cf6d07c')
-        console.log(result)
 
         let newArray = result.data.results
 
         if (result.status === 200){
             setPlatformSearch(newArray)
-            console.log(platformSearch)
             setIsLoading(false)
         }
-
-        console.log(newArray)
-        console.log(platformSearch)
-
         } catch (e) {
             console.log(e)
             setIsLoading(false)

@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from "axios"
 import { Link } from 'react-router-dom'
+import "./PlatformDetails.css"
 
 function Home() {
     return (
@@ -16,6 +17,7 @@ function Home() {
                     </div>
 
                     <div className='input-trending'>
+                    <div className='platformName'> Platform</div>
                         <div className='input'>
                             <form className='input'>
                                 <input

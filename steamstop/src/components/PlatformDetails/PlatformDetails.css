@@ -1,0 +1,80 @@
+/* * {
+    margin: center;
+    outline: solid white 1px;
+} */
+
+.platformMain {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+
+.platforminput-trending {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.platformName {
+    font-size: 50px;
+}
+
+.platformerrorMessage {
+    font-size: 16px;
+    color: white;
+}
+
+.platforminput input {
+    margin-top: 35px;
+    width: 300px;
+    height: 20px;
+    border: 1px solid rgb(59, 59, 136);
+}
+
+.platformtrending {
+    margin-top: 0;
+    width: 1000px;
+    height: 350px;
+    border: 1px solid black;
+    background-color: rgba(190, 205, 212, 0.671);
+    display: flex;
+    flex-direction: row;
+}
+
+.platformsearchedGameResults {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 700px;
+    ;
+}
+
+.platformsearchResults {
+    border: 1px solid black;
+    width: 100px;
+    height: 200px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.platformimg {
+    width: 100%;
+    height: 60%;
+}
+
+.platformsearchResultsText {
+    text-align: initial;
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+
+/* ---- bottom half ----- */
+
+
+/*----- bottom-half row search-----*/

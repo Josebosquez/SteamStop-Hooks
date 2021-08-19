@@ -10,7 +10,7 @@ function Home(){
     useEffect(() => {
         Platforms();
     }, [])
-    
+
     return (
         <div>
             <div className='main' style={{ background: isMode ? "lightslategray" : 'black' }}>
@@ -19,12 +19,14 @@ function Home(){
                         <p className='filteredTitle'>Platforms</p>
 
                         <div className='searchedPlatformResults'>
-                            {isLoading ? <div> ...loading</div> : <div> 
+                            {isLoading ? <div> ...loading</div> : <div className='platformResults'>
                                 {platformSearch.map((item)=>{
                                 return (
-                                    <span key={item.id}>
+                                    <Link to={{ pathname: `/platform-search/${item.id}` }} className="itemName" key={item.id}>
+                                    <span>
                                         {item.name}
                                     </span>
+                                    </Link>
                                 )
                             })}</div>}
                         </div>
