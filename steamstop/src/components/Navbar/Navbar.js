@@ -32,6 +32,7 @@ function Navbar() {
                     ) : (
                         <button onClick={() => setIsMode(true)}> Dark Mode</button>
                 )}
+
             </div>
         </nav>
     )

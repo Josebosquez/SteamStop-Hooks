@@ -13,9 +13,7 @@ function App() {
     <React.Suspense fallback={<Spinner />}>
       <Router>
         <AuthContextWrapper>
-          {/* <ThemeContextWrapper> */}
             <MainRouter />
-          {/* </ThemeContextWrapper> */}
         </AuthContextWrapper>
       </Router>
     </React.Suspense>
