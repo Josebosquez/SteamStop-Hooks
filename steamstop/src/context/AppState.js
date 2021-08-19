@@ -19,9 +19,8 @@ const AppState = (props) => {
     const [released, setreleased] = useState('')
     const [stores, setstores] = useState([])
     const [image, setImage] = useState('')
-    // const [imageArray, setImageArray] = useState([])
-    // const [bigImage, setBigImage] = useState('')
-
+    const [imageArray, setImageArray] = useState([])
+    const [bigImage, setBigImage] = useState('')
 
     async function Platforms() {
         setIsLoading(true)
@@ -64,22 +63,24 @@ const AppState = (props) => {
 
         try {
             let result = await axios.get(`https://api.rawg.io/api/games/${game}?key=6a456b24916a4165a3ab90808cf6d07c`)
-
+            
             let gameResult = result.data;
-
+            
             if(result.status=== 200){
                 setIsLoading(false)
                 setSearchedGameDetails(gameResult)
             }
+            let screenshots = await axios.get(`https://api.rawg.io/api/games/${game}/screenshots?key=6a456b24916a4165a3ab90808cf6d07c`)
+            setImageArray(screenshots.data.results)
             
         } catch (e) {
             console.log(e)
             setIsLoading(false)
         }
     }
-
+    
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, }}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage }}>
 
 
             {props.children}

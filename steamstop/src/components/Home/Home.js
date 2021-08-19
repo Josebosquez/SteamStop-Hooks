@@ -7,15 +7,9 @@ import Spinner from "../Spinner/Spinner"
 function Home() {
     const { isMode, Platforms, platformSearch, isLoading, value, setValue, SearchBar, SearchedGameArr } = useContext(ThemeContext)
 
-    // if () {
-    //     setMatchingProps(props.match.params.game)
-    // }
-
     useEffect(() => {
         Platforms();
-
     }, [])
-
 
     return (
         <div>
