@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react'
-import axios from "axios"
 import { Link } from 'react-router-dom'
 import "./Home.css"
 import { ThemeContext } from "../../context/ThemeContext"
@@ -7,9 +6,12 @@ import { ThemeContext } from "../../context/ThemeContext"
 function Home() {
     const { isMode, Platforms, platformSearch, isLoading, value, setValue, SearchBar, SearchedGameArr } = useContext(ThemeContext)
 
+    // if () {
+    //     setMatchingProps(props.match.params.game)
+    // }
+
     useEffect(() => {
         Platforms();
-
     }, [])
 
 
@@ -45,17 +47,17 @@ function Home() {
                         </div>
 
                         <div className='searchedGameResults'>
-                            {isLoading ? <div> ...loading</div> : <div className='platformResults'>
                                 {SearchedGameArr.map((item) => {
-                                    return (
-                                        <span key={item.id}>
+                                    return (<Link key={item.id} to={{
+                                            pathname: `/game-detail/${item.id}`
+                                        }}>
                                             <div className='searchResults'>
                                                 <img className='img' src={item.background_image} />
                                                 <p className='searchResultsText'>{item.name}</p>
                                             </div>
-                                        </span>
+                                    </Link>
                                     )
-                                })}</div>}
+                                })}
                         </div>
 
                         <p className='filteredTitle'>

@@ -9,7 +9,7 @@ const AppState = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [SearchedGameArr, setSearchedGameArr] = useState([])
 
-    console.log(value)
+
     async function Platforms() {
         setIsLoading(true)
         try {
@@ -32,7 +32,7 @@ const AppState = (props) => {
         setIsLoading(true)
 
         try {
-            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${value}&page_size=100`)
+            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${value}&page_size=50`)
 
             let newArray = searchedGame.data.results
 
@@ -46,10 +46,24 @@ const AppState = (props) => {
         }
     }
 
+    async function gameInfo(game){
+        try {
+            let result = await axios.get(`https://api.rawg.io/api/games/${game}?key=6a456b24916a4165a3ab90808cf6d07c`)
+
+            console.log(result)
+
+            let gameResult = result;
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr }}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo,  }}>
             {props.children}
         </ThemeContext.Provider>
     )
 }
+
 export default AppState
