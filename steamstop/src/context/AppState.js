@@ -35,6 +35,7 @@ const AppState = (props) => {
 
     async function Platforms() {
         setIsLoading(true)
+        
         try {
             let result = await axios.get(`https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_KEY}`)
 
@@ -122,7 +123,7 @@ const AppState = (props) => {
                 setBestGenreGames(newArray)
             }
 
-            let genre1 = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2020-01-01,2021-07-01&metacritic=85,100&page=1&page_size=10`)
+            let genre1 = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2020-01-01,2021-07-01&metacritic=85,100&page=1&page_size=8`)
 
             let newArray2 = genre1.data.results
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import "./Home.css"
 import { ThemeContext } from "../../context/ThemeContext"
@@ -6,9 +6,9 @@ import Spinner from "../Spinner/Spinner"
 
 function Home() {
     const { isMode, Trending, Platforms, platformSearch, isLoading, setValue, SearchBar, SearchedGameArr, trendingArray, Rows, bestGenreGames, coronaVirus } = useContext(ThemeContext)
+    const [toggle, setToggle] = useState(false)
 
     useEffect(() => {
-        Platforms();
         Trending();
         Rows();
     }, [])
@@ -16,6 +16,8 @@ function Home() {
     let trendingArrayToRender;
     let RenderBestGamesGenre;
     let RenderCorona;
+    let platformRender;
+
 
     if (bestGenreGames) {
         RenderBestGamesGenre = bestGenreGames.map((item, i) => {
@@ -28,8 +30,8 @@ function Home() {
         })
     }
 
-    if (coronaVirus){
-        RenderCorona = coronaVirus.map((item,i)=>{
+    if (coronaVirus) {
+        RenderCorona = coronaVirus.map((item, i) => {
             return <div key={i} className='rowResults'>
                 <Link to={{ pathname: `/game-detail/${item.id}` }}>
                     <img className='img' src={item.background_image} alt={item.background_image} />
@@ -69,25 +71,34 @@ function Home() {
         })
     }
 
+    function handlePlatformRender(e) {
+        e.preventDefault()
+        Platforms();
+        console.log('clicked')
+        setToggle(!toggle)
+    }
+
     return (
         <div>
             <div className='main' style={{ background: isMode ? "lightslategray" : 'black' }}>
                 <div className='top'>
                     <div className='allPlatforms'>
-                        <p className='filteredTitle'>Platforms</p>
+                        <h6 onClick={(e) => { handlePlatformRender(e) }}> Click me for available Platforms</h6>
 
-                        <div className='searchedPlatformResults'>
-                            {isLoading ? <div> <Spinner /></div> : <div className='platformResults'>
-                                {platformSearch.map((item) => {
-                                    return (
-                                        <Link to={{ pathname: `/platform-search/${item.id}` }} className="itemName" key={item.id}>
-                                            <span>
-                                                {item.name}
-                                            </span>
-                                        </Link>
-                                    )
-                                })}</div>}
-                        </div>
+                        {toggle
+                            ? <div className='searchedPlatformResults'>
+                                <div className='platformResults'>
+                                    {platformSearch.map((item) => {
+                                        return (
+                                            <Link to={{ pathname: `/platform-search/${item.id}` }} className="itemName" key={item.id}>
+                                                <span>
+                                                    {item.name}
+                                                </span>
+                                            </Link>
+                                        )
+                                    })} </div> </div>
+                            : <div className='blankPlatformResults'> </div>
+                        }
                     </div>
 
                     <div className='input-trending'>
@@ -114,10 +125,11 @@ function Home() {
                             })}
                         </div>
 
+                        <br />
                         <p className='filteredTitle'>
                             Upcoming games.
                         </p>
-
+                        <br />
                         <div className='trending'>
                             {trendingArrayToRender}
                         </div>
