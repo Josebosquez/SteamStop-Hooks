@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 function GameDetails(props) {
     let { game } = useParams();
 
-    const { isMode, gameInfo, isLoading, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage } = useContext(ThemeContext)
+    const { isMode, gameInfo, isLoading, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre} = useContext(ThemeContext)
 
     if (searchedGameDetails !== []) {
         setGameName(searchedGameDetails.name)
@@ -18,25 +18,49 @@ function GameDetails(props) {
         setreleased(searchedGameDetails.released)
         setstores(searchedGameDetails.stores)
         setImage(searchedGameDetails.background_image)
-        // setgameId(searchedGameDetails.id)
-        setBigImage(image)
-
+        setGameTags(searchedGameDetails.tags)
+        setGameGenre(searchedGameDetails.genres)
     }
+
     useEffect(() => {
         gameInfo(game)
+        setBigImage(image)
     }, [])
 
-
-    function handleOnImgClick(e, i){
-    console.log(e.target.src)
-        setBigImage(e.target.src)
+    async function handleOnImgClick(e) {
+        e.preventDefault();
+        console.log(e.target.src)
+        await setBigImage(e.target.src)
+        console.log(bigImage)
     }
 
     //------- maps ----
-
     let platformsToRender;
     let storesToRender;
-    let imagestoRender
+    let imagesToRender
+    let GameTagsToRender;
+    let GameGenresToRender;
+    
+    if (gameGenre){
+        GameGenresToRender = gameGenre.map((item)=>{
+            return (
+                <li key={item.id}>
+                    {item.name}
+                </li>
+            );
+        })
+    
+    }
+
+    if (gameTags){
+        GameTagsToRender = gameTags.map((item)=>{
+            return (
+                <li key={item.id}>
+                    {item.name}
+                </li>
+            );
+        })
+    }
 
     if (availablePlatforms) {
         platformsToRender = availablePlatforms.map((item) => {
@@ -61,15 +85,16 @@ function GameDetails(props) {
     }
 
     if (imageArray) {
-        imagestoRender = imageArray.map((item) => {
+        imagesToRender = imageArray.map((item) => {
             return (<div key={item.id} className='imagesDiv'>
                 <li>
-                    <img className='screenshotImg' src={item.image} alt={item.image} onClick={(e, i)=> {handleOnImgClick(e, i)}} />
+                    <img className='screenshotImg' src={item.image} alt={item.image} onClick={(e, i) => { handleOnImgClick(e, i) }} />
                 </li>
             </div>
             )
         })
     }
+
     // ------ maps end ----
     return (
         <div>
@@ -80,7 +105,7 @@ function GameDetails(props) {
                     </div>
 
                     <div className='images'>
-                        {imagestoRender}
+                        {imagesToRender}
                     </div>
                 </div>
 
@@ -115,8 +140,6 @@ function GameDetails(props) {
 
 
 
-
-
             <div className='bottomPage'>
 
                 <div className="description">
@@ -134,7 +157,7 @@ function GameDetails(props) {
                             Tags:
                             <div className='OLLI'>
                                 <ol>
-
+                                    {GameTagsToRender}
                                 </ol>
                             </div>
                         </div>

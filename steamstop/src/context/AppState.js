@@ -21,6 +21,11 @@ const AppState = (props) => {
     const [image, setImage] = useState('')
     const [imageArray, setImageArray] = useState([])
     const [bigImage, setBigImage] = useState('')
+    //-------- GameDetails bottom of the page state
+    const [gameTags, setGameTags] = useState([])
+    const [gameGenre, setGameGenre] = useState([])
+    const [gameESRB, setGameESRB] = useState([])
+    const [gameDescription, setGameDescription] = useState('')
 
     async function Platforms() {
         setIsLoading(true)
@@ -78,9 +83,9 @@ const AppState = (props) => {
             setIsLoading(false)
         }
     }
-    
+
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage }}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre }}>
 
 
             {props.children}
