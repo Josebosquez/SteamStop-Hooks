@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 function GameDetails(props) {
     let { game } = useParams();
 
-    const { isMode, gameInfo, isLoading, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre} = useContext(ThemeContext)
+    const { isMode, gameInfo, isLoading, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription} = useContext(ThemeContext)
 
     if (searchedGameDetails !== []) {
         setGameName(searchedGameDetails.name)
@@ -20,8 +20,11 @@ function GameDetails(props) {
         setImage(searchedGameDetails.background_image)
         setGameTags(searchedGameDetails.tags)
         setGameGenre(searchedGameDetails.genres)
+        setGameESRB(searchedGameDetails.esrb_rating,)
+        setGameDescription(searchedGameDetails.description_raw,)
     }
-
+    console.log(gameDescription)
+    console.log(gameESRB)
     useEffect(() => {
         gameInfo(game)
         setBigImage(image)
@@ -40,20 +43,29 @@ function GameDetails(props) {
     let imagesToRender
     let GameTagsToRender;
     let GameGenresToRender;
-    
-    if (gameGenre){
-        GameGenresToRender = gameGenre.map((item)=>{
+    let GameESRBToRender;
+    let GameDescriptionToRender;
+
+    if (gameDescription){
+        GameDescriptionToRender = gameDescription
+    }
+
+    if (gameESRB) {
+        GameESRBToRender = gameESRB.name || '';
+    }
+
+    if (gameGenre) {
+        GameGenresToRender = gameGenre.map((item) => {
             return (
                 <li key={item.id}>
                     {item.name}
                 </li>
             );
         })
-    
     }
 
-    if (gameTags){
-        GameTagsToRender = gameTags.map((item)=>{
+    if (gameTags) {
+        GameTagsToRender = gameTags.map((item) => {
             return (
                 <li key={item.id}>
                     {item.name}
@@ -138,19 +150,17 @@ function GameDetails(props) {
                 </div>
             </div>
 
-
-
             <div className='bottomPage'>
 
                 <div className="description">
-
+                    {GameDescriptionToRender}
                 </div>
 
                 <div className='reviews'>
                     <div>
                         <p className='ptag'>Rating Information</p>
                         <div className='rating'>
-
+                            ESRB: {GameESRBToRender}
                         </div>
                         <br />
                         <div className='ratingSize' >
@@ -165,7 +175,7 @@ function GameDetails(props) {
                             Genre(s):{" "}
                             <div className='ratingSize'>
                                 <ul>
-
+                                    {GameGenresToRender}
                                 </ul>
                             </div>
                         </div>
