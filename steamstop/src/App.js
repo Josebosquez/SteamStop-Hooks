@@ -5,8 +5,6 @@ import MainRouter from './MainRouter'
 import AuthContextWrapper from "./context/AuthContext"
 import "./_base.css"
 
-// import ThemeContextWrapper from './context/ThemeContext'
-
 function App() {
 
   return (

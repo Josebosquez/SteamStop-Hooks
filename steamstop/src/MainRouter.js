@@ -6,7 +6,7 @@ import Navbar from './components/Navbar/Navbar'
 const Home = React.lazy(() => import('./components/Home/Home'))
 const PlatformDetails = React.lazy(() => import('./components/PlatformDetails/PlatformDetails'))
 const NotFound = React.lazy(() => import('./components/NotFound/NotFound'))
-const GameDetails = React.lazy(()=> import("./components/GameDetails/GameDetails"))
+const GameDetails = React.lazy(() => import("./components/GameDetails/GameDetails"))
 
 
 function MainRouter() {

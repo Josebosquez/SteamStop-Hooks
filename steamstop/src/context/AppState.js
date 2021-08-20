@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ThemeContext from './ThemeContext'
 
 const AppState = (props) => {
@@ -21,16 +21,21 @@ const AppState = (props) => {
     const [image, setImage] = useState('')
     const [imageArray, setImageArray] = useState([])
     const [bigImage, setBigImage] = useState('')
+
     //-------- GameDetails bottom of the page state
     const [gameTags, setGameTags] = useState([])
     const [gameGenre, setGameGenre] = useState([])
     const [gameESRB, setGameESRB] = useState([])
     const [gameDescription, setGameDescription] = useState('')
 
+    //-------- Homepage state
+    const [trendingArray, setTrendingArray] = useState([])
+    const [bestGenreGames, setBestGenreGames] = useState([])
+
     async function Platforms() {
         setIsLoading(true)
         try {
-            let result = await axios.get('https://api.rawg.io/api/platforms?key=6a456b24916a4165a3ab90808cf6d07c')
+            let result = await axios.get(`https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_KEY}`)
 
             let newArray = result.data.results
 
@@ -49,35 +54,70 @@ const AppState = (props) => {
         setIsLoading(true)
 
         try {
-            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=6a456b24916a4165a3ab90808cf6d07c&search=${value}&page_size=50`)
+            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&search=${value}&page_size=50`)
 
             let newArray = searchedGame.data.results
 
             if (searchedGame.status === 200) {
                 setSearchedGameArr(newArray)
                 setIsLoading(false)
-            }
+            } 
         } catch (e) {
             setIsLoading(false)
             console.log(e)
         }
     }
 
-    async function gameInfo(game){
+    async function gameInfo(game) {
         setIsLoading(true)
+        setSearchedGameArr([])
 
         try {
-            let result = await axios.get(`https://api.rawg.io/api/games/${game}?key=6a456b24916a4165a3ab90808cf6d07c`)
-            
+            let result = await axios.get(`https://api.rawg.io/api/games/${game}?key=${process.env.REACT_APP_KEY}`)
+
             let gameResult = result.data;
-            
-            if(result.status=== 200){
+
+            if (result.status === 200) {
                 setIsLoading(false)
                 setSearchedGameDetails(gameResult)
             }
             let screenshots = await axios.get(`https://api.rawg.io/api/games/${game}/screenshots?key=6a456b24916a4165a3ab90808cf6d07c`)
             setImageArray(screenshots.data.results)
-            
+
+        } catch (e) {
+            console.log(e)
+            setIsLoading(false)
+        }
+    }
+
+
+    // --------- home page trending ------
+    async function Trending(){
+        setIsLoading(true)
+        try {
+            let trending = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2021-07-01,2021-12-31&ordering=-added&page=1&page_size=1`) // change size to more when i figured it out
+
+            let newArray = trending.data.results
+
+            if (trending.status === 200){
+                setTrendingArray(newArray)
+                setIsLoading(false)
+            }
+
+        } catch (e) {
+            console.log(e)
+            setIsLoading(false)
+        }
+    }
+
+    async function Rows(){
+        setIsLoading(true)
+        console.log(1)
+
+        try {
+            let genre = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&metacritic=90,100&page=1&page_size=10`)
+
+            console.log(genre)
         } catch (e) {
             console.log(e)
             setIsLoading(false)
@@ -85,9 +125,7 @@ const AppState = (props) => {
     }
 
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription }}>
-
-
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows }}>
             {props.children}
         </ThemeContext.Provider>
     )

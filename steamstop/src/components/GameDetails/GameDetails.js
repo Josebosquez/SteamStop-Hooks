@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import "./GameDetails.css"
 import ThemeContext from '../../context/ThemeContext'
 // import { Link } from 'react-router-dom'
@@ -23,8 +23,7 @@ function GameDetails(props) {
         setGameESRB(searchedGameDetails.esrb_rating,)
         setGameDescription(searchedGameDetails.description_raw,)
     }
-    console.log(gameDescription)
-    console.log(gameESRB)
+
     useEffect(() => {
         gameInfo(game)
         setBigImage(image)
@@ -171,6 +170,8 @@ function GameDetails(props) {
                                 </ol>
                             </div>
                         </div>
+                        
+                        <br/>
                         <div className='rating'>
                             Genre(s):{" "}
                             <div className='ratingSize'>
