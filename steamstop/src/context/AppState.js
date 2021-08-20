@@ -31,6 +31,7 @@ const AppState = (props) => {
     //-------- Homepage state
     const [trendingArray, setTrendingArray] = useState([])
     const [bestGenreGames, setBestGenreGames] = useState([])
+    const [coronaVirus, setCoronaVirus] = useState([])
 
     async function Platforms() {
         setIsLoading(true)
@@ -111,13 +112,24 @@ const AppState = (props) => {
     }
 
     async function Rows(){
-        setIsLoading(true)
-        console.log(1)
-
         try {
-            let genre = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&metacritic=90,100&page=1&page_size=10`)
+            let genre = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&metacritic=90,100&page=1&page_size=8`)
 
-            console.log(genre)
+            let newArray = genre.data.results
+
+            if (genre.status === 200){
+                setIsLoading(false)
+                setBestGenreGames(newArray)
+            }
+
+            let genre1 = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2020-01-01,2021-07-01&metacritic=85,100&page=1&page_size=10`)
+
+            let newArray2 = genre1.data.results
+
+            if (genre1.status === 200){
+                setCoronaVirus(newArray2)
+            }
+
         } catch (e) {
             console.log(e)
             setIsLoading(false)
@@ -125,7 +137,7 @@ const AppState = (props) => {
     }
 
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows }}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus }}>
             {props.children}
         </ThemeContext.Provider>
     )

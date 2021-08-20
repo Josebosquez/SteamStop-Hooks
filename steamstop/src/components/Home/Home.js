@@ -5,20 +5,42 @@ import { ThemeContext } from "../../context/ThemeContext"
 import Spinner from "../Spinner/Spinner"
 
 function Home() {
-    const { isMode, Trending, Platforms, platformSearch, isLoading, setValue, SearchBar, SearchedGameArr, trendingArray, Rows} = useContext(ThemeContext)
-    
-    // console.log(Trending)
-    
+    const { isMode, Trending, Platforms, platformSearch, isLoading, setValue, SearchBar, SearchedGameArr, trendingArray, Rows, bestGenreGames, coronaVirus } = useContext(ThemeContext)
+
     useEffect(() => {
         Platforms();
         Trending();
-        Rows()
+        Rows();
     }, [])
 
     let trendingArrayToRender;
+    let RenderBestGamesGenre;
+    let RenderCorona;
 
-    if (trendingArray){
-        trendingArrayToRender = trendingArray.map((item, i)=>{
+    if (bestGenreGames) {
+        RenderBestGamesGenre = bestGenreGames.map((item, i) => {
+            return <div key={i} className='rowResults'>
+                <Link to={{ pathname: `/game-detail/${item.id}` }}>
+                    <img className='img' src={item.background_image} alt={item.background_image} />
+                    <p className='searchResultsText'>{item.name}</p>
+                </Link>
+            </div>
+        })
+    }
+
+    if (coronaVirus){
+        RenderCorona = coronaVirus.map((item,i)=>{
+            return <div key={i} className='rowResults'>
+                <Link to={{ pathname: `/game-detail/${item.id}` }}>
+                    <img className='img' src={item.background_image} alt={item.background_image} />
+                    <p className='searchResultsText'>{item.name}</p>
+                </Link>
+            </div>
+        })
+    }
+
+    if (trendingArray) {
+        trendingArrayToRender = trendingArray.map((item, i) => {
             return <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
                 <div className='trending'>
                     <div className='left'>
@@ -30,7 +52,7 @@ function Home() {
                         </p>
                         <p className='trendingGameTitle'>
                             Release date: {item.released}
-                        </p> 
+                        </p>
                         <p className='trendingGameTitle'>
                             Consoles: {item.platforms.map((item) => {
                                 return <li >
@@ -106,14 +128,15 @@ function Home() {
                     <p className='filteredTitle'>Best Rated Games of All Time!</p>
 
                     <div className='row1'>
-
+                        {RenderBestGamesGenre}
                     </div>
                 </div>
+
                 <div className='row'>
                     <p className='filteredTitle'>Corona Virus Games!</p>
 
                     <div className='row1'>
-
+                        {RenderCorona}
                     </div>
                 </div>
             </div>
