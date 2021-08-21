@@ -1,9 +1,23 @@
-var createError = require('http-errors');
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require('dotenv').config();
+const createError = require('http-errors');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors')
+const mongoose = require('mongoose')
 
-var app = express();
+mongoose.connect(process.env.MONGO_DB, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+}) .then(()=> console.log("connected"))
+.catch((e)=> console.log(e))
+
+const app = express();
+
+let originUrl = process.env.NODE_ENV === "development"
+  ? "http://localhost:3000"
+  : "DEPLOY URL";
 
 app.use(logger('dev'));
 app.use(express.json());
