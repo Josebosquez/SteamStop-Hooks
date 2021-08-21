@@ -14,10 +14,15 @@ mongoose.connect(process.env.MONGO_DB, {
 .catch((e)=> console.log(e))
 
 const app = express();
+const userRouter = require('./routes/userRouter')
 
 let originUrl = process.env.NODE_ENV === "development"
   ? "http://localhost:3000"
   : "DEPLOY URL";
+
+app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+
+app.use('/user',userRouter)
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -37,7 +42,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json('error');
 });
 
 module.exports = app;
