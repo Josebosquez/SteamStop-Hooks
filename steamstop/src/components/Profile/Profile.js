@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthContext'
 
 function Profile() {
 
-    const { state: { user }, dispatch } = useContext(AuthContext)
+    const { state: { user } } = useContext(AuthContext)
 
     const userEmail = user ? `${user.email}` : 'user'
 

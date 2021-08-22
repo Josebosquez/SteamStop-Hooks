@@ -34,9 +34,17 @@ const AppState = (props) => {
     const [bestGenreGames, setBestGenreGames] = useState([])
     const [coronaVirus, setCoronaVirus] = useState([])
 
+    //-------- platform state
+    const [platformSearchedGameDetails, PlatformSearchedGameDetails] = useState([])
+    const [platformTrendingArray, setPlatformTrendingArray] = useState([])
+    const [platformBestGenre, setPlatformBestGenre] = useState([])
+    const [platformCoronaVirus, setPlatformCoronaVirus] = useState([])
+    const [platformName, setPlatformName] = useState('')
+    const [platformId, setPlatformId] = useState('')
+
     async function Platforms() {
         setIsLoading(true)
-        
+
         try {
             let result = await axios.get(`https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_KEY}`)
 
@@ -64,7 +72,8 @@ const AppState = (props) => {
             if (searchedGame.status === 200) {
                 setSearchedGameArr(newArray)
                 setIsLoading(false)
-            } 
+                setValue('')
+            }
         } catch (e) {
             setIsLoading(false)
             console.log(e)
@@ -88,21 +97,20 @@ const AppState = (props) => {
             setImageArray(screenshots.data.results)
 
         } catch (e) {
-            e.status(500).json({message: e})
+            e.status(500).json({ message: e })
             setIsLoading(false)
         }
     }
 
-
     // --------- home page trending ------
-    async function Trending(){
+    async function Trending() {
         setIsLoading(true)
         try {
             let trending = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2021-07-01,2021-12-31&ordering=-added&page=1&page_size=1`) // change size to more when i figured it out
 
             let newArray = trending.data.results
 
-            if (trending.status === 200){
+            if (trending.status === 200) {
                 setTrendingArray(newArray)
                 setIsLoading(false)
             }
@@ -113,13 +121,13 @@ const AppState = (props) => {
         }
     }
 
-    async function Rows(){
+    async function Rows() {
         try {
             let genre = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&metacritic=90,100&page=1&page_size=8`)
 
             let newArray = genre.data.results
 
-            if (genre.status === 200){
+            if (genre.status === 200) {
                 setIsLoading(false)
                 setBestGenreGames(newArray)
             }
@@ -128,18 +136,35 @@ const AppState = (props) => {
 
             let newArray2 = genre1.data.results
 
-            if (genre1.status === 200){
+            if (genre1.status === 200) {
                 setCoronaVirus(newArray2)
             }
-
         } catch (e) {
             console.log(e)
             setIsLoading(false)
         }
     }
 
+    // --------- platform home page ------
+
+    async function PlatformSearchBar(e) {
+        e.preventDefault();
+
+        try {
+            let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&platforms=${platformId}&search=${value}`)
+
+            let newArray = searchedGame.data.results
+
+            if (searchedGame.status === 200) {
+                PlatformSearchedGameDetails(newArray)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig}}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig, PlatformSearchBar, setPlatformId }}>
             {props.children}
         </ThemeContext.Provider>
     )

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react'
-import { makeStyles } from "@material-ui/core/styles"
 
 import { NavLink } from "react-router-dom"
 import { AuthContext } from '../../context/AuthContext'
@@ -8,8 +7,8 @@ import checkAuthCookie from '../hooks/checkAuthCookie'
 import Cookies from 'js-cookie'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-import "./Navbar.css";
 
+import "./Navbar.css";
 
 function Navbar(props) {
     const { isMode, setIsMode } = useContext(ThemeContext)
@@ -32,7 +31,7 @@ function Navbar(props) {
     async function logout() {
         try {
             let result = await axios.get('http://localhost:3001/api/users/logout')
-
+            console.log(result)
             dispatch({
                 type: "LOG_OUT"
             })

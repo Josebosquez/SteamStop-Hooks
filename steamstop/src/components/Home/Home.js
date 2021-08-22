@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import "./Home.css"
 import { ThemeContext } from "../../context/ThemeContext"
-import Spinner from "../Spinner/Spinner"
+// import Spinner from "../Spinner/Spinner"
 
 function Home() {
-    const { isMode, Trending, Platforms, platformSearch, isLoading, setValue, SearchBar, SearchedGameArr, trendingArray, Rows, bestGenreGames, coronaVirus } = useContext(ThemeContext)
+    const { isMode, Trending, Platforms, platformSearch, setValue, SearchBar, SearchedGameArr, trendingArray, Rows, bestGenreGames, coronaVirus } = useContext(ThemeContext)
     const [toggle, setToggle] = useState(false)
 
     useEffect(() => {
@@ -16,7 +16,6 @@ function Home() {
     let trendingArrayToRender;
     let RenderBestGamesGenre;
     let RenderCorona;
-    let platformRender;
 
     if (trendingArray) {
         trendingArrayToRender = trendingArray.map((item, i) => {
@@ -70,7 +69,6 @@ function Home() {
         })
     }
 
-
     function handlePlatformRender(e) {
         e.preventDefault()
         Platforms();
@@ -78,8 +76,8 @@ function Home() {
     }
 
     return (
-        <div>
-            <div className='main' style={{ background: isMode ? "lightslategray" : 'black' }}>
+        <div style={{ background: isMode ? "lightslategray" : 'black', color: isMode ? "black" : "white" }}>
+            <div className='main'>
                 <div className='top'>
                     
                     <div className='allPlatforms'>

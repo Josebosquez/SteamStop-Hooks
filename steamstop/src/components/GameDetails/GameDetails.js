@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 function GameDetails(props) {
     let { game } = useParams();
 
-    const { isMode, gameInfo, isLoading, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, setImageBig, imageBig} = useContext(ThemeContext)
+    const { isMode, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, setImageBig, imageBig} = useContext(ThemeContext)
 
     if (searchedGameDetails !== []) {
         setGameName(searchedGameDetails.name)
@@ -28,7 +28,7 @@ function GameDetails(props) {
     useEffect(() => {
         gameInfo(game)
         setBigImage(imageBig)
-    }, [imageBig])
+    }, [imageBig, game, setBigImage])
 
     async function handleOnImgClick(e) {
         e.preventDefault();
@@ -108,8 +108,8 @@ function GameDetails(props) {
 
     // ------ maps end ----
     return (
-        <div>
-            <div className='mainPage' style={{ background: isMode ? "lightslategray" : 'black' }}>
+        <div style={{ background: isMode ? "lightslategray" : 'black', color: isMode ? "black" : "white"}}>
+            <div className='mainPage'>
                 <div className='trailer-images'>
                     <div className='trailer'>
                         <img className='bigImage' src={bigImage} alt={''} />
@@ -130,20 +130,20 @@ function GameDetails(props) {
                         <p>Name: {gameName}</p>
                         <p>Rating: {rating}</p>
                         <p>Playtime: {playtime}</p>
-                        <p className='platform'>
+                        <div className='platform'>
                             Platforms:{" "}
-                            <div className='platformSize'>
+                            <p className='platformSize'>
                                 {platformsToRender}
-                            </div>
-                        </p>
+                            </p>
+                        </div>
                         <p>Achievements count: {achievementCount}</p>
                         <p>Release date: {released} </p>
-                        <p className='store'>
+                        <div className='store'>
                             Available Stores:{" "}
-                            <div className='storeSize'>
+                            <p className='storeSize'>
                                 {storesToRender}
-                            </div>
-                        </p>
+                            </p>
+                        </div>
                     </div>
 
                 </div>
