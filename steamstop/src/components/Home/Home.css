@@ -94,6 +94,16 @@ body {
     word-wrap: break-word;
 }
 
+.trending a:visited {
+    text-decoration: none;
+    color: blue;
+}
+
+.searchedGameResults a:visited {
+    text-decoration: none;
+    color: blue;
+}
+
 
 /* ---- bottom half ----- */
 
@@ -185,4 +195,9 @@ body {
     border: 2px solid black;
     width: 100px;
     height: 230px;
+}
+
+.rowResults a:visited {
+    text-decoration: none;
+    color: blue;
 }

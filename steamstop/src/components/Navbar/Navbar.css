@@ -38,13 +38,28 @@
         width: 50%;
         display: flex;
         justify-content: flex-end;
+        color: white;
+        text-decoration: none;
     }
     
     div ul li a {
         text-decoration: none;
+        color: white;
+    }
+    
+    div ul li a:visited {
+        text-decoration: none;
+        color: white;
     }
     
     div ul li {
+        display: inline-block;
+        width: 100px;
+        justify-content: right;
+        text-decoration: none;
+    }
+    
+    div ul li :visited {
         display: inline-block;
         width: 100px;
         justify-content: right;
