@@ -6,13 +6,13 @@ import {ThemeContext} from "../../context/ThemeContext"
 import "./PlatformDetails.css"
 
 function PlatformDetails(props) {
-    const { isMode, PlatformSearchBar, value, setValue, platformId, setPlatformId} = useContext(ThemeContext)
+    const { isMode, PlatformSearchBar, setValue, setPlatformId, platformSearchErr, platformSearchResultsArray} = useContext(ThemeContext)
     const {platform} = useParams()
 
     useEffect(() => {
         setPlatformId(platform)
     }, [platform])
-
+    console.log(platformSearchResultsArray)
 
 
     return (
@@ -36,10 +36,23 @@ function PlatformDetails(props) {
                                 />
                                 <button onClick={(e) => PlatformSearchBar(e)}>Enter</button>
                             </form>
+                            <div className="platformerrorMessage">
+                                {platformSearchErr && platformSearchErr}
+                            </div>
                         </div>
 
                         <div className='searchedGameResults'>
-
+                            {platformSearchResultsArray.map((item) => {
+                                return (<Link key={item.id} to={{
+                                    pathname: `/game-detail/${item.id}`
+                                }}>
+                                    <div className='searchResults'>
+                                        <img className='img' src={item.background_image} alt={item.background_image} />
+                                        <p className='searchResultsText'>{item.name}</p>
+                                    </div>
+                                </Link>
+                                )
+                            })}
                         </div>
 
                         <p className='filteredTitle'>

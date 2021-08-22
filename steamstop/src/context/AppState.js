@@ -35,7 +35,8 @@ const AppState = (props) => {
     const [coronaVirus, setCoronaVirus] = useState([])
 
     //-------- platform state
-    const [platformSearchedGameDetails, PlatformSearchedGameDetails] = useState([])
+    const [platformSearchErr, setPlatformSearchErr] = useState('')
+    const [platformSearchResultsArray, setPlatformSearchResultsArray] = useState([])
     const [platformTrendingArray, setPlatformTrendingArray] = useState([])
     const [platformBestGenre, setPlatformBestGenre] = useState([])
     const [platformCoronaVirus, setPlatformCoronaVirus] = useState([])
@@ -63,17 +64,19 @@ const AppState = (props) => {
     async function SearchBar(e) {
         e.preventDefault();
         setIsLoading(true)
-
         try {
             let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&search=${value}&page_size=50`)
 
             let newArray = searchedGame.data.results
+            console.log(newArray)
 
             if (searchedGame.status === 200) {
-                setSearchedGameArr(newArray)
-                setIsLoading(false)
-                setValue('')
-            }
+                setSearchedGameArr(newArray);
+                setValue('');
+            } 
+
+
+
         } catch (e) {
             setIsLoading(false)
             console.log(e)
@@ -83,6 +86,7 @@ const AppState = (props) => {
     async function gameInfo(game) {
         setIsLoading(true)
         setSearchedGameArr([])
+        setPlatformSearchResultsArray([])
 
         try {
             let result = await axios.get(`https://api.rawg.io/api/games/${game}?key=${process.env.REACT_APP_KEY}`)
@@ -154,17 +158,23 @@ const AppState = (props) => {
             let searchedGame = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&platforms=${platformId}&search=${value}`)
 
             let newArray = searchedGame.data.results
+            console.log(newArray)
 
             if (searchedGame.status === 200) {
-                PlatformSearchedGameDetails(newArray)
+                setPlatformSearchResultsArray(newArray)
+                setPlatformSearchErr('');
+                setValue('');
             }
+
+            { searchedGame.data.count === 0 ? setPlatformSearchErr(`this platform does not support the video game ${value}`) : setPlatformSearchErr('') && setPlatformSearchResultsArray([])};
+
         } catch (e) {
             console.log(e)
         }
     }
 
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig, PlatformSearchBar, setPlatformId }}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig, PlatformSearchBar, setPlatformId, platformSearchErr, platformSearchResultsArray}}>
             {props.children}
         </ThemeContext.Provider>
     )
