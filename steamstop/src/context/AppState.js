@@ -19,6 +19,7 @@ const AppState = (props) => {
     const [released, setreleased] = useState('')
     const [stores, setstores] = useState([])
     const [image, setImage] = useState('')
+    const [imageBig, setImageBig] = useState('')
     const [imageArray, setImageArray] = useState([])
     const [bigImage, setBigImage] = useState('')
 
@@ -87,7 +88,7 @@ const AppState = (props) => {
             setImageArray(screenshots.data.results)
 
         } catch (e) {
-            console.log(e)
+            e.status(500).json({message: e})
             setIsLoading(false)
         }
     }
@@ -138,7 +139,7 @@ const AppState = (props) => {
     }
 
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus }}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig}}>
             {props.children}
         </ThemeContext.Provider>
     )

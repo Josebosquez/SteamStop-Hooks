@@ -3,10 +3,10 @@ import { BrowserRouter as Router } from "react-router-dom"
 import Spinner from './components/Spinner/Spinner'
 import MainRouter from './MainRouter'
 import AuthContextWrapper from "./context/AuthContext"
+
 import "./_base.css"
 
 function App() {
-
   return (
     <React.Suspense fallback={<Spinner />}>
       <Router>

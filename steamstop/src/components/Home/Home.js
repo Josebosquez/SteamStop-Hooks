@@ -18,32 +18,9 @@ function Home() {
     let RenderCorona;
     let platformRender;
 
-
-    if (bestGenreGames) {
-        RenderBestGamesGenre = bestGenreGames.map((item, i) => {
-            return <div key={i} className='rowResults'>
-                <Link to={{ pathname: `/game-detail/${item.id}` }}>
-                    <img className='img' src={item.background_image} alt={item.background_image} />
-                    <p className='searchResultsText'>{item.name}</p>
-                </Link>
-            </div>
-        })
-    }
-
-    if (coronaVirus) {
-        RenderCorona = coronaVirus.map((item, i) => {
-            return <div key={i} className='rowResults'>
-                <Link to={{ pathname: `/game-detail/${item.id}` }}>
-                    <img className='img' src={item.background_image} alt={item.background_image} />
-                    <p className='searchResultsText'>{item.name}</p>
-                </Link>
-            </div>
-        })
-    }
-
     if (trendingArray) {
         trendingArrayToRender = trendingArray.map((item, i) => {
-            return <Link key={i} to={{ pathname: `/game-detail/${item.id}` }}>
+            return <Link key={i.id} to={{ pathname: `/game-detail/${item.id}` }}>
                 <div className='trending'>
                     <div className='left'>
                         <img className='trendingImg' src={item.background_image} alt={item.background_image} />
@@ -56,8 +33,8 @@ function Home() {
                             Release date: {item.released}
                         </p>
                         <p className='trendingGameTitle'>
-                            Consoles: {item.platforms.map((item) => {
-                                return <li >
+                            Consoles: {item.platforms.map((item, i) => {
+                                return <li key={i}>
                                     {item.platform.name}
                                 </li>
                             })}
@@ -71,10 +48,32 @@ function Home() {
         })
     }
 
+    if (bestGenreGames) {
+        RenderBestGamesGenre = bestGenreGames.map((item, i) => {
+            return <div key={i.id} className='rowResults'>
+                <Link to={{ pathname: `/game-detail/${item.id}` }}>
+                    <img className='img' src={item.background_image} alt={item.background_image} />
+                    <p className='searchResultsText'>{item.name}</p>
+                </Link>
+            </div>
+        })
+    }
+
+    if (coronaVirus) {
+        RenderCorona = coronaVirus.map((item, i) => {
+            return <div key={i.id} className='rowResults'>
+                <Link to={{ pathname: `/game-detail/${item.id}` }}>
+                    <img className='img' src={item.background_image} alt={item.background_image} />
+                    <p className='searchResultsText'>{item.name}</p>
+                </Link>
+            </div>
+        })
+    }
+
+
     function handlePlatformRender(e) {
         e.preventDefault()
         Platforms();
-        console.log('clicked')
         setToggle(!toggle)
     }
 
@@ -82,6 +81,7 @@ function Home() {
         <div>
             <div className='main' style={{ background: isMode ? "lightslategray" : 'black' }}>
                 <div className='top'>
+                    
                     <div className='allPlatforms'>
                         <h6 onClick={(e) => { handlePlatformRender(e) }}> Click me for available Platforms</h6>
 
@@ -96,7 +96,9 @@ function Home() {
                                                 </span>
                                             </Link>
                                         )
-                                    })} </div> </div>
+                                    })} 
+                                </div> 
+                            </div>
                             : <div className='blankPlatformResults'> </div>
                         }
                     </div>

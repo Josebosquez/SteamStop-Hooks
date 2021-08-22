@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext,  useEffect } from 'react'
 import "./GameDetails.css"
 import ThemeContext from '../../context/ThemeContext'
 // import { Link } from 'react-router-dom'
@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 function GameDetails(props) {
     let { game } = useParams();
 
-    const { isMode, gameInfo, isLoading, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription} = useContext(ThemeContext)
+    const { isMode, gameInfo, isLoading, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, setImageBig, imageBig} = useContext(ThemeContext)
 
     if (searchedGameDetails !== []) {
         setGameName(searchedGameDetails.name)
@@ -22,18 +22,17 @@ function GameDetails(props) {
         setGameGenre(searchedGameDetails.genres)
         setGameESRB(searchedGameDetails.esrb_rating,)
         setGameDescription(searchedGameDetails.description_raw,)
+        setImageBig(searchedGameDetails.background_image_additional)
     }
 
     useEffect(() => {
         gameInfo(game)
-        setBigImage(image)
-    }, [])
+        setBigImage(imageBig)
+    }, [imageBig])
 
     async function handleOnImgClick(e) {
         e.preventDefault();
-        console.log(e.target.src)
         await setBigImage(e.target.src)
-        console.log(bigImage)
     }
 
     //------- maps ----
@@ -97,7 +96,8 @@ function GameDetails(props) {
 
     if (imageArray) {
         imagesToRender = imageArray.map((item) => {
-            return (<div key={item.id} className='imagesDiv'>
+            return (
+            <div key={item.id} className='imagesDiv'>
                 <li>
                     <img className='screenshotImg' src={item.image} alt={item.image} onClick={(e, i) => { handleOnImgClick(e, i) }} />
                 </li>
@@ -130,20 +130,20 @@ function GameDetails(props) {
                         <p>Name: {gameName}</p>
                         <p>Rating: {rating}</p>
                         <p>Playtime: {playtime}</p>
-                        <div className='platform'>
+                        <p className='platform'>
                             Platforms:{" "}
                             <div className='platformSize'>
                                 {platformsToRender}
                             </div>
-                        </div>
+                        </p>
                         <p>Achievements count: {achievementCount}</p>
                         <p>Release date: {released} </p>
-                        <div className='store'>
+                        <p className='store'>
                             Available Stores:{" "}
                             <div className='storeSize'>
                                 {storesToRender}
                             </div>
-                        </div>
+                        </p>
                     </div>
 
                 </div>
