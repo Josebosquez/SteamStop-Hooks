@@ -6,20 +6,20 @@ import { ThemeContext } from "../../context/ThemeContext"
 import "./PlatformDetails.css"
 
 function PlatformDetails(props) {
-    const { isMode, PlatformSearchBar, setValue, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, Platforms, platformSearch, platformNameFunc, platformName, PlatformTrendingFunc, platformTrendingArray } = useContext(ThemeContext)
+    const { isMode, PlatformSearchBar, setValue, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, Platforms, platformSearch, platformNameFunc, platformName, PlatformTrendingFunc, platformTrendingArray, setPlatformSearchResultsArray,closePlatformSearchResultsArray } = useContext(ThemeContext)
     const { platform } = useParams()
 
     useEffect(() => {
         setPlatformId(platform)
         platformNameFunc(platform)
         PlatformTrendingFunc(platform)
-
     }, [platform, platformSearch])
 
     function handlePlatformRender(e) {
         e.preventDefault()
         Platforms();
         setToggle(!toggle)
+        setPlatformSearchResultsArray([])
     }
 
     let platNameRender;
@@ -32,7 +32,7 @@ function PlatformDetails(props) {
     }
     if (platformTrendingArray){
         platTrendingRender = platformTrendingArray.map((item, i) => {
-            return <Link key={i.id} to={{ pathname: `/game-detail/${item.id}` }}>
+            return <Link key={item.id} to={{ pathname: `/game-detail/${item.id}` }}>
                 <div className='trending'>
                     <div className='left'>
                         <img className='trendingImg' src={item.background_image} alt={item.background_image} />
@@ -45,14 +45,16 @@ function PlatformDetails(props) {
                             Release date: {item.released}
                         </p>
                         <p className='trendingGameTitle'>
-                            Consoles: {item.platforms.map((item, i) => {
-                                return <li key={i}>
+                            Consoles: {item.platforms.map((item) => {
+                                return <span key={item.id}>
+                                    <li >
                                     {item.platform.name}
                                 </li>
+                                    </span>
                             })}
                         </p>
                         <p className='trendingGameTitle'>
-                            Esrb rating: {item.esrb_rating.name}
+                            Esrb rating: {item.esrb_rating.name || ""}
                         </p>
                     </div>
                 </div>
@@ -93,6 +95,7 @@ function PlatformDetails(props) {
                                     onChange={(event) => setValue(event.target.value)}
                                 />
                                 <button onClick={(e) => PlatformSearchBar(e)}>Enter</button>
+                                <button onClick={(e) => closePlatformSearchResultsArray(e)}>Close</button>
                             </form>
                             <div className="platformerrorMessage">
                                 {platformSearchErr && platformSearchErr}

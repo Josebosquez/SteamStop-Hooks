@@ -5,7 +5,7 @@ import { ThemeContext } from "../../context/ThemeContext"
 // import Spinner from "../Spinner/Spinner"
 
 function Home() {
-    const { isMode, Trending, Platforms, platformSearch, setValue, SearchBar, SearchedGameArr, trendingArray, Rows, bestGenreGames, coronaVirus, toggle, setToggle } = useContext(ThemeContext)
+    const { isMode, Trending, Platforms, platformSearch, setValue, SearchBar, SearchedGameArr, trendingArray, Rows, bestGenreGames, coronaVirus, toggle, setToggle, setPlatformSearch, closeSearchArrayResults } = useContext(ThemeContext)
 
     useEffect(() => {
         Trending();
@@ -72,6 +72,7 @@ function Home() {
         e.preventDefault()
         Platforms();
         setToggle(!toggle)
+        setPlatformSearch([])
     }
 
     return (
@@ -107,6 +108,7 @@ function Home() {
                                     onChange={(event) => setValue(event.target.value)}
                                 />
                                 <button onClick={(e) => SearchBar(e)}>Enter</button>
+                                {platformSearch ? <button onClick={(e) => closeSearchArrayResults(e)}>Close</button> : <div></div>}
                             </form>
                         </div>
 

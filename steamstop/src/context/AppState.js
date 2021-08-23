@@ -72,7 +72,6 @@ const AppState = (props) => {
 
             if (searchedGame.status === 200) {
                 setSearchedGameArr(newArray);
-                setValue('');
             } 
 
 
@@ -173,14 +172,14 @@ const AppState = (props) => {
             let newArray = searchedGame.data.results
             console.log(newArray)
 
-            if (searchedGame.status === 200) {
+            if (searchedGame.status === 200)  {
                 setPlatformSearchResultsArray(newArray)
                 setPlatformSearchErr('');
-                setValue('');
+            } else {
+                setPlatformSearchResultsArray([])
             }
 
             { searchedGame.data.count === 0 ? setPlatformSearchErr(`this platform does not support the video game ${value}`) : setPlatformSearchErr('') && setPlatformSearchResultsArray([])};
-
         } catch (e) {
             console.log(e)
         }
@@ -198,8 +197,16 @@ const AppState = (props) => {
             console.log(e)
         }
     }
+
+    async function closeSearchArrayResults(e){
+        e.preventDefault()
+        setPlatformSearchResultsArray([])
+        setSearchedGameArr([])
+    }
+
+
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig, PlatformSearchBar, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, platformNameFunc, platformName, PlatformTrendingFunc, platformTrendingArray}}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig, PlatformSearchBar, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, platformNameFunc, platformName, PlatformTrendingFunc, platformTrendingArray, setPlatformSearchResultsArray, setPlatformSearch, closeSearchArrayResults}}>
             {props.children}
         </ThemeContext.Provider>
     )
