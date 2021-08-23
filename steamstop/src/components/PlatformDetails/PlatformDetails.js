@@ -6,15 +6,15 @@ import { ThemeContext } from "../../context/ThemeContext"
 import "./PlatformDetails.css"
 
 function PlatformDetails(props) {
-    const { isMode, PlatformSearchBar, setValue, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, Platforms, platformSearch, platformNameFunc, platformName } = useContext(ThemeContext)
+    const { isMode, PlatformSearchBar, setValue, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, Platforms, platformSearch, platformNameFunc, platformName, PlatformTrendingFunc, platformTrendingArray } = useContext(ThemeContext)
     const { platform } = useParams()
 
     useEffect(() => {
         setPlatformId(platform)
         platformNameFunc(platform)
+        PlatformTrendingFunc(platform)
 
     }, [platform, platformSearch])
-    console.log(platformSearchResultsArray)
 
     function handlePlatformRender(e) {
         e.preventDefault()
@@ -23,13 +23,41 @@ function PlatformDetails(props) {
     }
 
     let platNameRender;
-    console.log(platformName)
+    let platTrendingRender;
 
     if (platformName) {
-        platNameRender = platformName.map((item)=>{
-        return item.platform.name
+        platNameRender = platformName.map((item) => {
+            return item.platform.name
         })
-        console.log(platNameRender)
+    }
+    if (platformTrendingArray){
+        platTrendingRender = platformTrendingArray.map((item, i) => {
+            return <Link key={i.id} to={{ pathname: `/game-detail/${item.id}` }}>
+                <div className='trending'>
+                    <div className='left'>
+                        <img className='trendingImg' src={item.background_image} alt={item.background_image} />
+                    </div>
+                    <div className='right'>
+                        <p className='trendingGameTitle'>
+                            Name of game: {item.name}
+                        </p>
+                        <p className='trendingGameTitle'>
+                            Release date: {item.released}
+                        </p>
+                        <p className='trendingGameTitle'>
+                            Consoles: {item.platforms.map((item, i) => {
+                                return <li key={i}>
+                                    {item.platform.name}
+                                </li>
+                            })}
+                        </p>
+                        <p className='trendingGameTitle'>
+                            Esrb rating: {item.esrb_rating.name}
+                        </p>
+                    </div>
+                </div>
+            </Link>
+        })
     }
 
     return (
@@ -84,13 +112,15 @@ function PlatformDetails(props) {
                                 )
                             })}
                         </div>
+                        <br />
 
                         <p className='filteredTitle'>
                             Upcoming games.
                         </p>
+                        <br />
 
                         <div className='trending'>
-
+                            {platTrendingRender}
                         </div>
                     </div>
                 </div>

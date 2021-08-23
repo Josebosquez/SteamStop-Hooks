@@ -78,7 +78,7 @@ function Home() {
         <div style={{ background: isMode ? "lightslategray" : 'black', color: isMode ? "black" : "white" }}>
             <div className='main'>
                 <div className='top'>
-                    
+
                     <div className='allPlatforms'>
                         <h6 onClick={(e) => { handlePlatformRender(e) }}> Click me for available Platforms</h6>
 
@@ -93,8 +93,8 @@ function Home() {
                                                 </span>
                                             </Link>
                                         )
-                                    })} 
-                                </div> 
+                                    })}
+                                </div>
                             </div>
                             : <div className='blankPlatformResults'> </div>
                         }

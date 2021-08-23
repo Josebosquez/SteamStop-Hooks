@@ -154,7 +154,7 @@ const AppState = (props) => {
     async function platformNameFunc(platform){
         try {
             let result = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&platforms=${platform}`)
-            console.log(result)
+
             setPlatformName( result.data.results[0].platforms.filter((item) => {
                 return item.platform.id == platform
             })
@@ -186,8 +186,20 @@ const AppState = (props) => {
         }
     }
 
+    async function PlatformTrendingFunc(platform){
+        try {
+            let trending = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2021-07-01,2021-12-31&platforms=${platform}&ordering=-added&page=1&page_size=1`)
+
+            if (trending.status === 200){
+                setPlatformTrendingArray(trending.data.results)
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig, PlatformSearchBar, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, platformNameFunc, platformName}}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig, PlatformSearchBar, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, platformNameFunc, platformName, PlatformTrendingFunc, platformTrendingArray}}>
             {props.children}
         </ThemeContext.Provider>
     )
