@@ -11,6 +11,7 @@ const NotFound = React.lazy(() => import('./components/NotFound/NotFound'))
 const GameDetails = React.lazy(() => import("./components/GameDetails/GameDetails"))
 const Auth = React.lazy(() => import("./components/Auth/Auth"))
 const Profile = React.lazy(() => import("./components/Profile/Profile"))
+const PrivateHome = React.lazy(() => import("./components/privateHome/privateHome"))
 
 function MainRouter() {
     return (
@@ -24,6 +25,7 @@ function MainRouter() {
                     <Route exact path='/platform-search/:platform' component={PlatformDetails} />
                     
                     <PrivateRoute exact path='/profile' component={Profile}/>
+                    <PrivateRoute exact path='/home' component={PrivateHome}/>
 
                     <Route exact path='/' component={Home} />
                     <Route component={NotFound} />

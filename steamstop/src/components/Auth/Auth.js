@@ -9,7 +9,7 @@ import { ThemeContext } from "../../context/ThemeContext"
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        "& > *": {// anything and anything after (* means everything)
+        "& > *": {
             margin: theme.spacing(1),
             width: '25ch',
         },
@@ -21,11 +21,9 @@ function Auth(props) {
     const { isMode } = useContext(ThemeContext)
 
     let isLoginRoute = props.match.path === "/login"
-    // we are saying that isLoginRoute = our page path which is login.
     let buttonTitle = isLoginRoute ? "Login" : "Sign up"
-    // button title is  saying if isLoginRoute = true, then we go to login page. else go to signup.
     let apiURL = isLoginRoute ? '/users/login' : "/users/create-user";
-    // we are saying here if true, we use the path for login, else we use the page for sign up.
+
 
     const [
         { isLoading,
@@ -36,11 +34,11 @@ function Auth(props) {
         handleMessageClose,
         isMessageOpen,
         successMessageValue
-    ] = useFetchAPI(apiURL) // we are passing in apiURL
+    ] = useFetchAPI(apiURL) 
 
-    const { checkIfCookieExists } = CheckAuthCookie(); // bringing in our checkCookieExists function.
+    const { checkIfCookieExists } = CheckAuthCookie(); 
 
-    //where we use useChangeInputConfig ---
+
     const [email,
         handleEmailChange,
         isEmailError,
@@ -82,7 +80,7 @@ function Auth(props) {
         return <MuiAlert elevation={6} variant='filled' {...props} />;
     };
 
-    function errorMessage() { // working on our error message being displayed.
+    function errorMessage() { 
         return (
             <Snackbar open={isMessageOpen} autoHideDuration={6000} onClose={handleMessageClose}
                 style={{ transform: 'translateY(-500px)' }}>
@@ -91,7 +89,7 @@ function Auth(props) {
         )
     };
 
-    function successMessage() { // if we are successful with creating a user, show successM
+    function successMessage() { 
         return (
             <Snackbar open={isMessageOpen} autoHideDuration={6000} onClose={handleMessageClose}
                 style={{ transform: 'translateY(-500px)' }}>
@@ -116,17 +114,17 @@ function Auth(props) {
     }
 
     if (checkIfCookieExists()) {
-        props.history.push("/");
+        props.history.push("/home");
     }
 
-    return <div style={{ background: isMode ? "lightslategray" : 'black', color: isMode ? "black" : "white", height: "1000px" }}>
+    return <div style={{ background: isMode ? "lightslategray" : 'black', height: "1000px" }}>
 
         <Grid container spacing={0}
             justifyContent="center" >
             {successMessageValue && successMessage()}
-            {/* bring in response and successMessage func */}
+
             {error && errorMessage()}
-            <form className={classes.root} onSubmit={handleOnSubmit}> {/* calling useStyles variable name */}
+            <form className={classes.root} onSubmit={handleOnSubmit} style={{ color: isMode ? "black" : "white"}}> 
                 <Grid item m={6}>
                     <TextField fullWidth label="Email" name="email" value={email} onChange={handleEmailChange} error={isEmailError}
                         helperText={emailErrorMessage} />
@@ -152,7 +150,6 @@ function Auth(props) {
                             isLoginRoute ? isEmailDisabled || isPasswordDisabled
                                 : isEmailDisabled || isPasswordDisabled || isUsernameDisabled}
                     >
-                        {/* if i am in login route, then only use email/password and it wont let you submit, else use if in signup, isUsername, password, email for login in. button will be unavailable to sign in/up. */}
                         {buttonTitle}
                     </Button>
                 </Grid>

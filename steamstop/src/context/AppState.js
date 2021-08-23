@@ -22,6 +22,8 @@ const AppState = (props) => {
     const [imageBig, setImageBig] = useState('')
     const [imageArray, setImageArray] = useState([])
     const [bigImage, setBigImage] = useState('')
+    const [favoriteToggle, setFavoriteToggle] = useState(false)
+    const [favoriteGameArr, setFavoriteGameArr] = useState([])
 
     //-------- GameDetails bottom of the page state
     const [gameTags, setGameTags] = useState([])
@@ -204,9 +206,31 @@ const AppState = (props) => {
         setSearchedGameArr([])
     }
 
+    async function PlatformRows(platform) {
+        try {
+            let genre = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&metacritic=90,100&page=1&page_size=8&platforms=${platform}`)
 
+            let newArray = genre.data.results
+
+            if (genre.status === 200) {
+                setIsLoading(false)
+                setPlatformBestGenre(newArray)
+            }
+
+            let genre1 = await axios.get(`https://api.rawg.io/api/games?key=${process.env.REACT_APP_KEY}&dates=2020-01-01,2021-07-01&metacritic=85,100&page=1&page_size=8&platforms=${platform}`)
+
+            let newArray2 = genre1.data.results
+
+            if (genre1.status === 200) {
+                setPlatformCoronaVirus(newArray2)
+            }
+        } catch (e) {
+            console.log(e)
+            setIsLoading(false)
+        }
+    }
     return (
-        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig, PlatformSearchBar, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, platformNameFunc, platformName, PlatformTrendingFunc, platformTrendingArray, setPlatformSearchResultsArray, setPlatformSearch, closeSearchArrayResults}}>
+        <ThemeContext.Provider value={{ isMode, setIsMode, platformSearch, Platforms, isLoading, value, setValue, SearchBar, SearchedGameArr, gameInfo, searchedGameDetails, gameName, setGameName, rating, setRating, playtime, setPlaytime, availablePlatforms, setavailablePlatforms, achievementCount, setachievementCount, released, setreleased, stores, setstores, image, setImage, imageArray, setBigImage, bigImage, gameTags, setGameTags, gameGenre, setGameGenre, gameESRB, setGameESRB, gameDescription, setGameDescription, Trending, trendingArray, Rows, bestGenreGames, coronaVirus, setImageBig, imageBig, PlatformSearchBar, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, platformNameFunc, platformName, PlatformTrendingFunc, platformTrendingArray, setPlatformSearchResultsArray, setPlatformSearch, closeSearchArrayResults, PlatformRows, platformBestGenre, platformCoronaVirus, favoriteToggle, setFavoriteToggle, favoriteGameArr, setFavoriteGameArr}}>
             {props.children}
         </ThemeContext.Provider>
     )

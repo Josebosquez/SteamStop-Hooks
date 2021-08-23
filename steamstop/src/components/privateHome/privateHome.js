@@ -1,41 +1,26 @@
-import React, { useContext, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ThemeContext } from "../../context/ThemeContext"
+// import Spinner from "../Spinner/Spinner"
 
-import "./PlatformDetails.css"
+import "./privateHome.css"
 
-function PlatformDetails(props) {
-    const { isMode, PlatformSearchBar, setValue, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, Platforms, platformSearch, platformNameFunc, platformName, PlatformTrendingFunc, platformTrendingArray, setPlatformSearchResultsArray, closePlatformSearchResultsArray, PlatformRows, platformBestGenre, platformCoronaVirus } = useContext(ThemeContext)
-    const { platform } = useParams()
+function PrivateHome() {
+    const { isMode, Trending, Platforms, platformSearch, setValue, SearchBar, SearchedGameArr, trendingArray, Rows, bestGenreGames, coronaVirus, toggle, setToggle, setPlatformSearch, closeSearchArrayResults, favoriteGameArr} = useContext(ThemeContext)
 
     useEffect(() => {
-        setPlatformId(platform)
-        platformNameFunc(platform)
-        PlatformTrendingFunc(platform)
-        PlatformRows(platform)
-    }, [platform, platformSearch])
+        Trending();
+        Rows();
+    }, [])
 
-    function handlePlatformRender(e) {
-        e.preventDefault()
-        Platforms();
-        setToggle(!toggle)
-        setPlatformSearchResultsArray([])
-    }
-
-    let platNameRender;
-    let platTrendingRender;
+    let trendingArrayToRender;
     let RenderBestGamesGenre;
     let RenderCorona;
-
-    if (platformName) {
-        platNameRender = platformName.map((item) => {
-            return item.platform.name
-        })
-    }
-
-    if (platformTrendingArray.length >= 0){
-        platTrendingRender = platformTrendingArray.map((item, i) => {
-            return <Link key={item.id} to={{ pathname: `/game-detail/${item.id}` }}>
+    let Favorites;
+    
+    if (trendingArray) {
+        trendingArrayToRender = trendingArray.map((item, i) => {
+            return <Link key={i.id} to={{ pathname: `/game-detail/${item.id}` }}>
                 <div className='trending'>
                     <div className='left'>
                         <img className='trendingImg' src={item.background_image} alt={item.background_image} />
@@ -48,27 +33,23 @@ function PlatformDetails(props) {
                             Release date: {item.released}
                         </p>
                         <p className='trendingGameTitle'>
-                            Consoles: {item.platforms.map((item) => {
-                                return <span key={item.id}>
-                                    <li >
+                            Consoles: {item.platforms.map((item, i) => {
+                                return <li key={i}>
                                     {item.platform.name}
                                 </li>
-                                    </span>
                             })}
                         </p>
                         <p className='trendingGameTitle'>
-                            Esrb rating: {item.esrb_rating?.name || ""}
+                            Esrb rating: {item.esrb_rating.name}
                         </p>
                     </div>
                 </div>
             </Link>
         })
-    } else {
-        platTrendingRender = "There are no available games at this time"
     }
 
-    if (platformBestGenre.length > 0) {
-        RenderBestGamesGenre = platformBestGenre.map((item, i) => {
+    if (bestGenreGames) {
+        RenderBestGamesGenre = bestGenreGames.map((item, i) => {
             return <div key={i.id} className='rowResults'>
                 <Link to={{ pathname: `/game-detail/${item.id}` }}>
                     <img className='img' src={item.background_image} alt={item.background_image} />
@@ -76,12 +57,10 @@ function PlatformDetails(props) {
                 </Link>
             </div>
         })
-    } else {
-        RenderBestGamesGenre = "There are no available games at this time"
     }
 
-    if (platformCoronaVirus.length>0) {
-        RenderCorona = platformCoronaVirus.map((item, i) => {
+    if (coronaVirus) {
+        RenderCorona = coronaVirus.map((item, i) => {
             return <div key={i.id} className='rowResults'>
                 <Link to={{ pathname: `/game-detail/${item.id}` }}>
                     <img className='img' src={item.background_image} alt={item.background_image} />
@@ -89,14 +68,32 @@ function PlatformDetails(props) {
                 </Link>
             </div>
         })
-    } else {
-        RenderCorona = "There are no available games at this time"
+    }
+
+    if (favoriteGameArr) {
+        Favorites = favoriteGameArr.map((item, i) => {
+            return <div key={i.id} className='rowResults'>
+                <Link to={{ pathname: `/game-detail/${item.id}` }}>
+                    <img className='img' src={item.background_image} alt={item.background_image} />
+                    <p className='searchResultsText'>{item.name}</p>
+                </Link>
+            </div>
+        })
+    }
+
+
+    function handlePlatformRender(e) {
+        e.preventDefault()
+        Platforms();
+        setToggle(!toggle)
+        setPlatformSearch([])
     }
 
     return (
         <div style={{ background: isMode ? "lightslategray" : 'black', color: isMode ? "black" : "white" }}>
             <div className='main'>
                 <div className='top'>
+
                     <div className='allPlatforms'>
                         <h6 onClick={(e) => { handlePlatformRender(e) }}> Click me for available Platforms</h6>
 
@@ -119,24 +116,18 @@ function PlatformDetails(props) {
                     </div>
 
                     <div className='input-trending'>
-                        <br/>
-                        <div className='platformName'> {platNameRender} Platform</div>
                         <div className='input'>
                             <form className='input'>
                                 <input placeholder='Search bar'
                                     onChange={(event) => setValue(event.target.value)}
                                 />
-                                <button onClick={(e) => PlatformSearchBar(e)}>Enter</button>
-
-                                <button onClick={(e) => closePlatformSearchResultsArray(e)}>Close</button>
+                                <button onClick={(e) => SearchBar(e)}>Enter</button>
+                                {platformSearch ? <button onClick={(e) => closeSearchArrayResults(e)}>Close</button> : <div></div>}
                             </form>
-                            <div className="platformerrorMessage">
-                                {platformSearchErr && platformSearchErr}
-                            </div>
                         </div>
 
                         <div className='searchedGameResults'>
-                            {platformSearchResultsArray.map((item) => {
+                            {SearchedGameArr.map((item) => {
                                 return (<Link key={item.id} to={{
                                     pathname: `/game-detail/${item.id}`
                                 }}>
@@ -148,15 +139,14 @@ function PlatformDetails(props) {
                                 )
                             })}
                         </div>
-                        <br />
 
+                        <br />
                         <p className='filteredTitle'>
                             Upcoming games.
                         </p>
                         <br />
-
                         <div className='trending'>
-                            {platTrendingRender}
+                            {trendingArrayToRender}
                         </div>
                     </div>
                 </div>
@@ -168,6 +158,7 @@ function PlatformDetails(props) {
                         {RenderBestGamesGenre}
                     </div>
                 </div>
+
                 <div className='row'>
                     <p className='filteredTitle'>Corona Virus Games!</p>
 
@@ -175,9 +166,16 @@ function PlatformDetails(props) {
                         {RenderCorona}
                     </div>
                 </div>
+                <div className='row'>
+                    <p className='filteredTitle'>Your Favorite Games!</p>
+
+                    <div className='row1'>
+                        {Favorites}
+                    </div>
+                </div>
             </div>
         </div>
     )
 }
 
-export default PlatformDetails
+export default PrivateHome
