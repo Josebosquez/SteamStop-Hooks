@@ -5,8 +5,7 @@ import { ThemeContext } from "../../context/ThemeContext"
 // import Spinner from "../Spinner/Spinner"
 
 function Home() {
-    const { isMode, Trending, Platforms, platformSearch, setValue, SearchBar, SearchedGameArr, trendingArray, Rows, bestGenreGames, coronaVirus } = useContext(ThemeContext)
-    const [toggle, setToggle] = useState(false)
+    const { isMode, Trending, Platforms, platformSearch, setValue, SearchBar, SearchedGameArr, trendingArray, Rows, bestGenreGames, coronaVirus, toggle, setToggle } = useContext(ThemeContext)
 
     useEffect(() => {
         Trending();

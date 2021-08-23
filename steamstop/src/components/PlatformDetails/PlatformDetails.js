@@ -1,34 +1,64 @@
-import React, {useContext, useEffect} from 'react'
+import React, { useContext, useEffect } from 'react'
 import axios from "axios"
-import { Link, useParams} from 'react-router-dom'
-import {ThemeContext} from "../../context/ThemeContext"
+import { Link, useParams } from 'react-router-dom'
+import { ThemeContext } from "../../context/ThemeContext"
 
 import "./PlatformDetails.css"
 
 function PlatformDetails(props) {
-    const { isMode, PlatformSearchBar, setValue, setPlatformId, platformSearchErr, platformSearchResultsArray} = useContext(ThemeContext)
-    const {platform} = useParams()
+    const { isMode, PlatformSearchBar, setValue, setPlatformId, platformSearchErr, platformSearchResultsArray, toggle, setToggle, Platforms, platformSearch, platformNameFunc, platformName } = useContext(ThemeContext)
+    const { platform } = useParams()
 
     useEffect(() => {
         setPlatformId(platform)
-    }, [platform])
+        platformNameFunc(platform)
+
+    }, [platform, platformSearch])
     console.log(platformSearchResultsArray)
 
+    function handlePlatformRender(e) {
+        e.preventDefault()
+        Platforms();
+        setToggle(!toggle)
+    }
+
+    let platNameRender;
+    console.log(platformName)
+
+    if (platformName) {
+        platNameRender = platformName.map((item)=>{
+        return item.platform.name
+        })
+        console.log(platNameRender)
+    }
 
     return (
         <div style={{ background: isMode ? "lightslategray" : 'black', color: isMode ? "black" : "white" }}>
             <div className='main'>
                 <div className='top'>
                     <div className='allPlatforms'>
-                        <p className='filteredTitle'>Platforms</p>
+                        <h6 onClick={(e) => { handlePlatformRender(e) }}> Click me for available Platforms</h6>
 
-                        <div className='searchedPlatformResults'>
-                
-                        </div>
+                        {toggle
+                            ? <div className='searchedPlatformResults'>
+                                <div className='platformResults'>
+                                    {platformSearch.map((item) => {
+                                        return (
+                                            <Link to={{ pathname: `/platform-search/${item.id}` }} className="itemName" key={item.id}>
+                                                <span>
+                                                    {item.name}
+                                                </span>
+                                            </Link>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                            : <div className='blankPlatformResults'> </div>
+                        }
                     </div>
 
                     <div className='input-trending'>
-                    <div className='platformName'> Platform</div>
+                        <div className='platformName'> {platNameRender} Platform</div>
                         <div className='input'>
                             <form className='input'>
                                 <input placeholder='Search bar'
