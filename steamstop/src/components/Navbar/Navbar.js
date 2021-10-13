@@ -43,6 +43,7 @@ function Navbar(props) {
             console.log(e)
         }
     }
+    
     return (
         <nav className='Navbar'>
             <div className="h1-logo">

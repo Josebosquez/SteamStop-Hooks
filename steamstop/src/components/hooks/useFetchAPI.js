@@ -4,9 +4,9 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
 function useFetchAPI(url) { 
-    const baseURL = process.env.NODE_ENV === 'development'
+    const baseURL = process.env.REACT_APP_ENV === 'development'
         ? "http://localhost:3001/api"
-        : "DEPLOYED LOCATION";
+        : "/api";
 
     const [isLoading, setIsLoading] = useState(false)
     const [response, setResponse] = useState(null)

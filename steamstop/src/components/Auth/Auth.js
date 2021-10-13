@@ -34,9 +34,9 @@ function Auth(props) {
         handleMessageClose,
         isMessageOpen,
         successMessageValue
-    ] = useFetchAPI(apiURL) 
+    ] = useFetchAPI(apiURL)
 
-    const { checkIfCookieExists } = CheckAuthCookie(); 
+    const { checkIfCookieExists } = CheckAuthCookie();
 
 
     const [email,
@@ -80,7 +80,7 @@ function Auth(props) {
         return <MuiAlert elevation={6} variant='filled' {...props} />;
     };
 
-    function errorMessage() { 
+    function errorMessage() {
         return (
             <Snackbar open={isMessageOpen} autoHideDuration={6000} onClose={handleMessageClose}
                 style={{ transform: 'translateY(-500px)' }}>
@@ -89,7 +89,7 @@ function Auth(props) {
         )
     };
 
-    function successMessage() { 
+    function successMessage() {
         return (
             <Snackbar open={isMessageOpen} autoHideDuration={6000} onClose={handleMessageClose}
                 style={{ transform: 'translateY(-500px)' }}>
@@ -124,7 +124,7 @@ function Auth(props) {
             {successMessageValue && successMessage()}
 
             {error && errorMessage()}
-            <form className={classes.root} onSubmit={handleOnSubmit} style={{ color: isMode ? "black" : "white"}}> 
+            <form className={classes.root} onSubmit={handleOnSubmit} style={{ color: isMode ? "black" : "white" }}>
                 <Grid item m={6}>
                     <TextField fullWidth label="Email" name="email" value={email} onChange={handleEmailChange} error={isEmailError}
                         helperText={emailErrorMessage} />
